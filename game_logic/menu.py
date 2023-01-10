@@ -1,5 +1,5 @@
 import pygame
-from data import sound_tools
+from game_logic import sound_tools
 
 
 class Menu:
@@ -25,8 +25,9 @@ class Menu:
             self.screen.blit(label, (x, y))
 
     def event_handler(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            return self.get_click(event.pos)
+        if event:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return self.get_click(event.pos)
 
     def get_move(self, mouse_pos):
         pos_x, pos_y = mouse_pos

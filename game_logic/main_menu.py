@@ -16,6 +16,6 @@ class MainMenu(Menu):
                       ("ZAMKADISHI", self.PINK, 10, (170, 730)),
                       ("tm", self.GREEN, 10, (265, 730))]
 
-        self.buttons = [("PLAY", self.PINK, 20, (210, 300, 67, 25), None),
+        self.buttons = [("PLAY", self.PINK, 20, (210, 300, 67, 25), 'game'),
                         ("STATISTICS", self.PINK, 20, (170, 350, 157, 25), None),
                         ("OPTIONS", self.PINK, 20, (190, 400, 113, 25), 'option')]

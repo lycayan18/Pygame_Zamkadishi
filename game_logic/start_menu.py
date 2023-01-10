@@ -13,8 +13,9 @@ class StartMenu(Menu):
 
     def event_handler(self, event):
         res = super().event_handler(event)
-        if event.type == pygame.KEYDOWN:
-            self.title[0] = (self.do_name(event), self.YELLOW, 20, (100, 400))
+        if event:
+            if event.type == pygame.KEYDOWN:
+                self.title[0] = (self.do_name(event), self.YELLOW, 20, (100, 400))
         return res
 
     def do_name(self, event):

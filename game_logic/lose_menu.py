@@ -5,12 +5,12 @@ from game_logic.menu import Menu
 class LoseMenu(Menu):
     def __init__(self, screen):
         super().__init__(screen)
-        self.title = [('YOU LOSE', self.GREEN, 30, (140, 270)),
-                      ('RESTART', self.YELLOW, 10, (200, 410)),
-                      ('RETURN TO MENU', self.YELLOW, 10, (170, 450))]
+        self.title = [('YOU LOSE', self.GREEN, 40, (120, 297)),
+                      ('RESTART', self.YELLOW, 20, (178, 383)),
+                      ('RETURN TO MENU', self.YELLOW, 20, (128, 442))]
 
-        self.buttons = [('RESTART', self.PINK, 10, (200, 410, 60, 12), 'game'),
-                        ('RETURN TO MENU', self.PINK, 10, (170, 450, 115, 12), 'main')]
+        self.buttons = [('RESTART', self.PINK, 20, (178, 383, 95, 28), 'game'),
+                        ('RETURN TO MENU', self.PINK, 20, (128, 442, 193, 28), 'main')]
 
     def render_title(self):
         super().render_title()

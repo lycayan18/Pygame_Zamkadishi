@@ -2,7 +2,7 @@ import pygame
 from pygame_widgets.slider import Slider
 from game_logic.menu import Menu
 from game_logic.tools import load_image
-from data import sound_tools
+from game_logic import sound_tools
 
 
 class OptionsMenu(Menu):
