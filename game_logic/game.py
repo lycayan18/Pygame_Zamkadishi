@@ -10,7 +10,8 @@ from game_logic.lose_menu import LoseMenu
 class Game(Menu):
     def __init__(self, screen):
         super().__init__(screen)
-        self.title = []
+        self.title = [("ZAMKADISHI", self.PINK, 10, (189, 730)),
+                      ("tm", self.GREEN, 10, (284, 730))]
         self.buttons = []
         self.points = 0
         self.count = 1
@@ -53,7 +54,7 @@ class Game(Menu):
             self.snake_x = 0
             self.snake_y = -1
 
-        if self.count % (60 // ((self.points * 0.5) + 5)) == 0:
+        if self.count % (60 // ((self.points * 0.5) + 3)) == 0:
             self.snake.append((self.snake[-1][0] + self.snake_x, self.snake[-1][1] + self.snake_y))
             del self.snake[0]
             self.apple_event()

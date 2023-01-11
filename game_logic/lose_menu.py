@@ -7,7 +7,10 @@ class LoseMenu(Menu):
         super().__init__(screen)
         self.title = [('YOU LOSE', self.GREEN, 40, (120, 297)),
                       ('RESTART', self.YELLOW, 20, (178, 383)),
-                      ('RETURN TO MENU', self.YELLOW, 20, (128, 442))]
+                      ('RETURN TO MENU', self.YELLOW, 20, (128, 442)),
+                      ("ZAMKADISHI", self.PINK, 10, (189, 730)),
+                      ("tm", self.GREEN, 10, (284, 730))
+                      ]
 
         self.buttons = [('RESTART', self.PINK, 20, (178, 383, 95, 28), 'game'),
                         ('RETURN TO MENU', self.PINK, 20, (128, 442, 193, 28), 'main')]

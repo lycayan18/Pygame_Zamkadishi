@@ -17,14 +17,14 @@ class OptionsMenu(Menu):
                       ("NIKITA SELEZNEV", self.YELLOW, 20, (130, 450)),
                       ("KIRILL SOLOVEV", self.YELLOW, 20, (140, 500)),
                       ("ARTYOM ANDRIUKHIN", self.YELLOW, 20, (100, 550)),
-                      ("ZAMKADISHI", self.PINK, 10, (170, 730)),
-                      ("tm", self.GREEN, 10, (265, 730))]
+                      ("ZAMKADISHI", self.PINK, 10, (189, 730)),
+                      ("tm", self.GREEN, 10, (284, 730))]
 
         self.buttons = [("MARIO", self.YELLOW, 20, (40, 180, 87, 25), 'mario'),
                         ("TERMINATOR", self.YELLOW, 20, (175, 180, 174, 25), 'terminator'),
                         ("CAT", self.YELLOW, 20, (400, 180, 50, 25), 'cat')]
 
-        self.back = load_image('strela_neon.png', data_path='#source/tmp/')
+        self.back = load_image('strela_neon.png', data_path='data')
         self.back = pygame.transform.scale(self.back, (50, 50))
 
         self.music_slider = Slider(screen, 180, 35, 250, 10, colour=self.PINK,

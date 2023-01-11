@@ -6,6 +6,7 @@ from game_logic.main_menu import MainMenu
 from game_logic.start_menu import StartMenu
 from game_logic.lose_menu import LoseMenu
 from game_logic.game import Game
+from game_logic.statistick import Statistick
 
 
 def main():
@@ -17,7 +18,7 @@ def main():
     pygame.mixer.music.set_volume(0.5)
 
     all_menu = {'start': StartMenu(screen), 'main': MainMenu(screen), 'game': Game(screen),
-                'stat': None, 'option': OptionsMenu(screen), 'lose': LoseMenu(screen)}
+                'stat': Statistick(screen), 'option': OptionsMenu(screen), 'lose': LoseMenu(screen),}
     board = all_menu['start']
 
     clock = pygame.time.Clock()

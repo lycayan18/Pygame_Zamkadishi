@@ -13,9 +13,9 @@ class MainMenu(Menu):
                       ("STATISTICS", self.YELLOW, 20, (170, 350)),
                       ("OPTIONS", self.YELLOW, 20, (190, 400)),
                       ("NICKNAME", self.GREEN, 20, (175, 550)),
-                      ("ZAMKADISHI", self.PINK, 10, (170, 730)),
-                      ("tm", self.GREEN, 10, (265, 730))]
+                      ("ZAMKADISHI", self.PINK, 10, (189, 730)),
+                      ("tm", self.GREEN, 10, (284, 730))]
 
         self.buttons = [("PLAY", self.PINK, 20, (210, 300, 67, 25), 'game'),
-                        ("STATISTICS", self.PINK, 20, (170, 350, 157, 25), None),
+                        ("STATISTICS", self.PINK, 20, (170, 350, 157, 25), 'stat'),
                         ("OPTIONS", self.PINK, 20, (190, 400, 113, 25), 'option')]

@@ -8,7 +8,10 @@ class StartMenu(Menu):
         self.name = ''
         self.title = [(self.name, self.YELLOW, 20, (100, 400)),
                       ('ENTER NAME', self.GREEN, 30, (120, 300)),
-                      ("PLAY", self.YELLOW, 20, (210, 600))]
+                      ("PLAY", self.YELLOW, 20, (210, 600)),
+                      ("ZAMKADISHI", self.PINK, 10, (189, 730)),
+                      ("tm", self.GREEN, 10, (284, 730))
+                      ]
         self.buttons = [("PLAY", self.PINK, 20, (210, 600, 67, 25), 'main')]
 
     def event_handler(self, event):
