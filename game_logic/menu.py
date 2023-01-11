@@ -49,4 +49,3 @@ class Menu:
                 sound_tools.click.play()
                 if i[4]:
                     return i[4]
-                print(i[0])

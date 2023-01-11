@@ -3,9 +3,12 @@ from game_logic.menu import Menu
 from game_logic.tools import load_image
 from game_logic import sound_tools
 
+from db.requests import games_data
+
 
 class Statistick(Menu):
-    def __init__(self, screen):
+    def __init__(self, screen, session):
+        self.session = session
         super().__init__(screen)
         self.title = [('NICKNAME', self.YELLOW, 17, (64, 73)),
                       ('MAX', self.YELLOW, 17, (179 + 44, 59 + 14)),
@@ -13,28 +16,32 @@ class Statistick(Menu):
                       ("ZAMKADISHI", self.PINK, 10, (189, 730)),
                       ("tm", self.GREEN, 10, (284, 730))
                       ]
-        self.res = (('1234567890123456', 1234, 4), ('player1', 3, 1), ('pl', 4, 10))
-        self.res = sorted(self.res, key=lambda x: (-x[1], -x[2]))
-        self.max_score = max(i[1] for i in self.res)
-        self.average_score = max(i[2] for i in self.res)
-        print(self.max_score, self.average_score)
-
-        for i, elem in enumerate(self.res):
-            nickname = elem[0]
-            max_sc = str(elem[1])
-            ave_sc = str(elem[2])
-            color = self.YELLOW
-            nickname_size = 17 - (0 if len(nickname) <= 8 else len(nickname) - 8)
-
-            self.title.append(
-                (nickname, color, nickname_size, (120 - len(nickname) * nickname_size // 3.4, 73 + (i + 1) * 55)))
-            self.title.append((max_sc, self.GREEN if int(max_sc) == self.max_score else color, 17,
-                               (240 - (len(max_sc) * 5), 73 + (i + 1) * 55)))
-            self.title.append((ave_sc, self.GREEN if int(ave_sc) == self.average_score else color, 17,
-                               (370 - (len(ave_sc) * 5), 73 + (i + 1) * 55)))
 
         self.back = load_image('strela_neon.png', data_path='data')
         self.back = pygame.transform.scale(self.back, (50, 50))
+
+        self.update()
+
+    def update(self):
+        self.res = games_data(self.session)
+        if self.res:
+            self.res = sorted(self.res, key=lambda x: (-x[1], -x[2]))
+            self.max_score = max(i[1] for i in self.res)
+            self.average_score = max(i[2] for i in self.res)
+
+            for i, elem in enumerate(self.res):
+                nickname = elem[0]
+                max_sc = str(elem[1])
+                ave_sc = str(int(elem[2]))
+                color = self.YELLOW
+                nickname_size = 17 - (0 if len(nickname) <= 8 else len(nickname) - 8)
+
+                self.title.append(
+                    (nickname, color, nickname_size, (120 - len(nickname) * nickname_size // 3.4, 73 + (i + 1) * 55)))
+                self.title.append((max_sc, self.GREEN if float(max_sc) == self.max_score else color, 17,
+                                   (240 - (len(max_sc) * 5), 73 + (i + 1) * 55)))
+                self.title.append((ave_sc, self.GREEN if float(ave_sc) == self.average_score else color, 17,
+                                   (370 - (len(ave_sc) * 5), 73 + (i + 1) * 55)))
 
     def get_click(self, mouse_pos):
         x, y = mouse_pos
@@ -46,6 +53,7 @@ class Statistick(Menu):
             pygame.mixer.music.play(-1)
 
     def render_title(self):
+        self.update()
         super().render_title()
         
         self.screen.blit(self.back, (20, 700))
