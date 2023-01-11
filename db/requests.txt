@@ -1,0 +1,12 @@
+INSERT INTO Users VALUES (NULL, {username}) - добавить юзера
+
+INSERT INTO Games VALUES (NULL, {user_id}, {score: int}, {time: float}) - добавить игру
+
+SELECT UserId FROM Users WHERE Username LIKE {username} - айди юзера по никнейму
+
+SELECT Users.Username, Score, Time FROM Games JOIN Users ON Games.UserId = Users.UserId WHERE Games.UserId LIKE {user_id} - все игры юзера
+
+SELECT Users.Username, Score, Time FROM Games JOIN Users ON Games.UserId = Users.UserId  ORDER BY Score LIMIT 10 - топ 10 игр по кол-ву набранных очков
+
+
+
