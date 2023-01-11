@@ -35,6 +35,7 @@ def main():
                 board = all_menu[result]
                 name = all_menu['start'].get_name().upper()
                 all_menu['main'].title[0][0] = name
+                all_menu['game'].set_name(name)
                 all_menu['main'].title[0][3][0] = 244 - len(name) // 2 * 9
         clock.tick(FPS)
         screen.fill((0, 0, 0))

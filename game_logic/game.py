@@ -2,6 +2,8 @@ import pygame
 from pygame_widgets.slider import Slider
 from random import randint
 
+from game_logic import sound_tools
+
 from game_logic.tools import load_image, ImageSprite
 from game_logic.menu import Menu
 from game_logic.lose_menu import LoseMenu
@@ -10,14 +12,36 @@ from game_logic.lose_menu import LoseMenu
 class Game(Menu):
     def __init__(self, screen):
         super().__init__(screen)
-        self.title = [("ZAMKADISHI", self.PINK, 10, (189, 730)),
-                      ("tm", self.GREEN, 10, (284, 730))]
+        self.name = ''
+        total_apples = 250  # добавить с бд
+        max_apples = 17  # добавить с бд
+
+        self.title = [
+            ('time:', self.PINK, 20, (50, 120)),
+            ('0:0:0', self.YELLOW, 20, (130, 120)),
+            ('x', self.PINK, 20, (101, 60)),
+            ('0', self.YELLOW, 20, (122, 60)),
+
+            ('x', self.PINK, 20, (109, 630)),
+            (str(total_apples), self.YELLOW, 20, (130, 630)),
+            ('total', self.PINK, 20, (180, 630)),
+            (str(max_apples), self.YELLOW, 20, (250, 630)),
+            ('max', self.PINK, 20, (280, 630))
+        ]
         self.buttons = []
         self.points = 0
         self.count = 1
         self.snake = [(0, 0), (1, 0), (2, 0), (3, 0), (3, 1)]
         self.snake_x, self.snake_y = 0, 1
         self.apple_x, self.apple_y = 10, 10
+
+        self.group = pygame.sprite.Group()
+        apple_image = pygame.transform.scale(load_image('apple_v2.png', data_path='#source/tmp/'), (40, 40))
+        apple_sprite1 = ImageSprite(apple_image, (50, 55), self.group)
+        apple_sprite2 = ImageSprite(apple_image, (60, 620), self.group)
+
+        self.Clock = pygame.time.Clock()
+        self.time = 0
 
     def draw_rect(self, x, y, color):
         pygame.draw.rect(self.screen, color, (49 + 15 * x, 189 + 15 * y, 15, 15))
@@ -32,11 +56,32 @@ class Game(Menu):
         pygame.draw.line(self.screen, self.PINK, (41 + 405, 174), (41 + 405, 181 + 400), 15)
         pygame.draw.line(self.screen, self.PINK, (34, 186 + 400), (34 + 419, 186 + 400), 15)
 
+        self.update_title()
+
+        super(Game, self).render_title()
+        self.group.draw(self.screen)
+
         for x, y in self.snake:
             self.draw_rect(x, y, self.YELLOW)
 
+        self.Clock.tick()
+
+    def update_title(self):
+        self.time += self.Clock.get_time()
+        all_seconds = self.time // 1000
+        hours = all_seconds // 3600
+        minutes = all_seconds // 60
+        seconds = all_seconds % 60
+        self.title[1] = (f'{hours:02}:{minutes:02}:{seconds:02}', self.YELLOW, 20, (130, 120))
+        self.title[3] = (str(self.points), self.YELLOW, 20, (122, 60))
+
     def event_handler(self, event):
         self.count += 1
+        # if event and event.type == pygame.MOUSEBUTTONDOWN:
+        #     if self.arrow_sprite.collide_point(*event.pos):
+        #         self.end_game(exit=True)
+        #         return 'main'
+
         return self.snake_event()
 
     def snake_event(self):
@@ -54,24 +99,19 @@ class Game(Menu):
             self.snake_x = 0
             self.snake_y = -1
 
-        if self.count % (60 // ((self.points * 0.5) + 3)) == 0:
+        if self.count % (60 // ((self.points * 0.5) + 5)) == 0:
             self.snake.append((self.snake[-1][0] + self.snake_x, self.snake[-1][1] + self.snake_y))
             del self.snake[0]
             self.apple_event()
             if self.death_event():
-                self.title = []
-                self.buttons = []
-                self.points = 0
-                self.count = 1
-                self.snake = [(0, 0), (1, 0), (2, 0), (3, 0), (3, 1)]
-                self.snake_x, self.snake_y = 0, 1
-                self.apple_x, self.apple_y = 10, 10
-
+                sound_tools.lose.play()
+                self.end_game()
                 return 'lose'
 
     def apple_event(self):
         if self.snake[-1][0] == self.apple_x and self.snake[-1][1] == self.apple_y:
             self.points += 1
+            sound_tools.point.play()
             self.snake = [(self.snake[0][0], self.snake[0][1])] + self.snake
 
             new_apple_x, new_apple_y = randint(0, 25), randint(0, 25)
@@ -88,3 +128,9 @@ class Game(Menu):
         for i in self.snake[:-1]:
             if i == (head_x, head_y):
                 return True
+
+    def set_name(self, name):
+        self.name = name
+
+    def end_game(self, exit=False):
+        self.__init__(self.screen)
