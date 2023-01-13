@@ -1,4 +1,5 @@
 /venv/
 /.gitignore/
 /__pycache/
+/db/snake.db/
 /.idea/

@@ -3,6 +3,8 @@ from game_logic.menu import Menu
 
 
 class StartMenu(Menu):
+    ALP = 'abcdefghijklmnopqrstuvwxyz'.upper()
+
     def __init__(self, screen):
         super().__init__(screen)
         self.name = ''

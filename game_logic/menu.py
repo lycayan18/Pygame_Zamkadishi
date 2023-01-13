@@ -7,7 +7,6 @@ class Menu:
     YELLOW = (255, 255, 0)
     GREEN = (15, 239, 145)
     FONT = 'data/fff-forward.regular.ttf'
-    ALP = 'abcdefghijklmnopqrstuvwxyz'
 
     def __init__(self, screen):
         self.screen = screen

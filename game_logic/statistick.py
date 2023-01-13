@@ -20,28 +20,27 @@ class Statistick(Menu):
         self.back = load_image('strela_neon.png', data_path='data')
         self.back = pygame.transform.scale(self.back, (50, 50))
 
-        self.update()
-
     def update(self):
+        self.__init__(self.screen, self.session)
         self.res = games_data(self.session)
         if self.res:
             self.res = sorted(self.res, key=lambda x: (-x[1], -x[2]))
-            self.max_score = max(i[1] for i in self.res)
-            self.average_score = max(i[2] for i in self.res)
+            self.max_score = max([i[1] // 1 for i in self.res])
+            self.average_score = max([i[2] // 1 for i in self.res])
 
             for i, elem in enumerate(self.res):
                 nickname = elem[0]
-                max_sc = str(elem[1])
-                ave_sc = str(int(elem[2]))
+                max_sc = int(elem[1])
+                ave_sc = int(elem[2])
                 color = self.YELLOW
                 nickname_size = 17 - (0 if len(nickname) <= 8 else len(nickname) - 8)
 
                 self.title.append(
                     (nickname, color, nickname_size, (120 - len(nickname) * nickname_size // 3.4, 73 + (i + 1) * 55)))
-                self.title.append((max_sc, self.GREEN if float(max_sc) == self.max_score else color, 17,
-                                   (240 - (len(max_sc) * 5), 73 + (i + 1) * 55)))
-                self.title.append((ave_sc, self.GREEN if float(ave_sc) == self.average_score else color, 17,
-                                   (370 - (len(ave_sc) * 5), 73 + (i + 1) * 55)))
+                self.title.append((str(max_sc), self.GREEN if max_sc == self.max_score else color, 17,
+                                   (240 - (len(str(max_sc)) * 5), 73 + (i + 1) * 55)))
+                self.title.append((str(ave_sc), self.GREEN if ave_sc == self.average_score else color, 17,
+                                   (370 - (len(str(ave_sc)) * 5), 73 + (i + 1) * 55)))
 
     def get_click(self, mouse_pos):
         x, y = mouse_pos
