@@ -30,7 +30,9 @@ class Game(Menu):
             (str(total_apples), self.YELLOW, 20, (130, 630)),
             ('averange', self.PINK, 20, (180, 630)),
             (str(max_apples), self.YELLOW, 20, (330, 630)),
-            ('max', self.PINK, 20, (350, 630))
+            ('max', self.PINK, 20, (350, 630)),
+            ("ZAMKADISHI", self.PINK, 10, (189, 730)),
+            ("tm", self.GREEN, 10, (284, 730))
         ]
         self.buttons = []
         self.points = 0
