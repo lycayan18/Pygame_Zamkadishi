@@ -71,11 +71,9 @@ class Game(Menu):
         self.Clock.tick()
 
     def update_title(self):
-        self.time += self.Clock.get_time()
-        all_seconds = self.time // 1000
-        hours = all_seconds // 3600
-        minutes = all_seconds // 60
-        seconds = all_seconds % 60
+        hours = self.count // 60 ** 3
+        minutes = self.count // 60 ** 2 % 60 if self.count // 60 ** 2 != 0 else 0
+        seconds = self.count // 60 if self.count != 0 else 0
         self.title[1] = (f'{hours:02}:{minutes:02}:{seconds:02}', self.YELLOW, 20, (130, 120))
         self.title[3] = (str(self.points), self.YELLOW, 20, (122, 60))
 
