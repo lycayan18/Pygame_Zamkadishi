@@ -4,7 +4,7 @@ from sqlalchemy import subquery
 from sqlalchemy.sql import func
 
 
-def add_user(session, name='noname'):  # добавить игрока
+def add_user(session, name):  # добавить игрока
     if not len(session.query(Users.UserId).filter(Users.Username == name).all()):
         c = Users(
             Username=name
@@ -14,7 +14,7 @@ def add_user(session, name='noname'):  # добавить игрока
         session.commit()
 
 
-def add_game(session, name='noname', score=0, time=0):  # добавит результаты игры по имени игрока
+def add_game(session, name, score=0, time=0):  # добавит результаты игры по имени игрока
     c = Games(
         UserId=session.query(Users.UserId).filter(Users.Username == name).all()[0][0],
         Score=score,
@@ -32,7 +32,7 @@ def games_data(session):  # топ рекордов
     return q
 
 
-def total_record(session, name='noname'):
+def total_record(session, name):
     q = session.query(func.max(Games.Score), func.avg(Games.Score)).join(Users).filter(Users.Username == name).all()[0]
 
     if not q[0]:

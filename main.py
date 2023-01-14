@@ -37,7 +37,7 @@ def main():
             result = board.event_handler(event)
             if result:
                 board = all_menu[result]
-                name = all_menu['start'].get_name().upper()
+                name = all_menu['start'].get_name()
                 all_menu['main'].title[0][0] = name
                 all_menu['game'].set_name(name)
                 all_menu['main'].title[0][3][0] = 244 - len(name) // 2 * 9

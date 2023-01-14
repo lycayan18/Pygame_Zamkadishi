@@ -16,21 +16,21 @@ class Game(Menu):
         self.session = session
 
         self.name = ''
-        total_apples = 250  # добавить с бд
-        max_apples = 17# добавить с бд
         self.max_apples, self.total_apples, self.first_total = 0, 0, 0
 
         self.title = [
             ('time:', self.PINK, 20, (50, 120)),
             ('0:0:0', self.YELLOW, 20, (130, 120)),
             ('x', self.PINK, 20, (101, 60)),
-            ('0', self.YELLOW, 20, (122, 60)),
+            ('0', self.YELLOW, 20, (132 - len('0') * 20 // 3.6, 60)),
 
             ('x', self.PINK, 20, (109, 630)),
-            (str(total_apples), self.YELLOW, 20, (130, 630)),
-            ('averange', self.PINK, 20, (180, 630)),
-            (str(max_apples), self.YELLOW, 20, (330, 630)),
-            ('max', self.PINK, 20, (350, 630))
+            ('0', self.YELLOW, 20, (140 - len(str('0')) * 20 // 3.6, 630)),
+            ('averange', self.PINK, 20, (165, 630)),
+            ('0', self.YELLOW, 20, (315 - len(str('0')) * 20 // 3.6, 630)),
+            ('max', self.PINK, 20, (335, 630)),
+            ("ZAMKADISHI", self.PINK, 10, (189, 730)),
+            ("tm", self.GREEN, 10, (284, 730))
         ]
         self.buttons = []
         self.points = 0
@@ -71,16 +71,14 @@ class Game(Menu):
         self.Clock.tick()
 
     def update_title(self):
-        self.time += self.Clock.get_time()
-        all_seconds = self.time // 1000
-        hours = all_seconds // 3600
-        minutes = all_seconds // 60
-        seconds = all_seconds % 60
+        hours = self.count // 60 ** 3
+        minutes = self.count // 60 ** 2 % 60 if self.count // 60 ** 2 != 0 else 0
+        seconds = self.count // 60 if self.count != 0 else 0
         self.title[1] = (f'{hours:02}:{minutes:02}:{seconds:02}', self.YELLOW, 20, (130, 120))
-        self.title[3] = (str(self.points), self.YELLOW, 20, (122, 60))
+        self.title[3] = (str(self.points), self.YELLOW, 20, (132 - len(str(self.points)) * 20 // 3.6, 60))
 
-        self.title[7] = (str(self.total_apples), self.YELLOW, 20, (130, 630))
-        self.title[5] = (str(self.max_apples), self.YELLOW, 20, (330, 630))
+        self.title[7] = (str(self.total_apples), self.YELLOW, 20, (140 - len(str(self.total_apples)) * 20 // 3.6, 630))
+        self.title[5] = (str(self.max_apples), self.YELLOW, 20, (305 - len(str(self.max_apples)) * 20 // 3.6, 630))
 
     def event_handler(self, event):
         self.count += 1
@@ -143,12 +141,15 @@ class Game(Menu):
                 return True
 
     def set_name(self, name):
-        self.name = name
-        add_user(self.session, name)
+        if name:
+            self.name = name
+        else:
+            self.name = 'NONAME'
+        add_user(self.session, self.name)
         if not self.first_total:
             self.max_apples, self.total_apples = total_record(self.session, name)
             self.total_apples = int(self.total_apples)
             self.first_max = self.max_apples
 
-    def end_game(self, exit=False):
+    def end_game(self):
         self.__init__(self.screen, self.session)
