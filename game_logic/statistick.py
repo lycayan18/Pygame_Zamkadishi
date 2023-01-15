@@ -8,8 +8,7 @@ from db.requests import games_data
 
 class Statistick(Menu):
     def __init__(self, screen, session):
-        self.session = session
-        super().__init__(screen)
+        super().__init__(screen, session)
         self.title = [('NICKNAME', self.YELLOW, 17, (64, 73)),
                       ('MAX', self.YELLOW, 17, (179 + 44, 59 + 14)),
                       ('AVERAGE', self.YELLOW, 17, (309 + 14, 59 + 14)),
@@ -21,7 +20,7 @@ class Statistick(Menu):
         self.back = pygame.transform.scale(self.back, (50, 50))
 
     def update(self):
-        self.__init__(self.screen, self.session)
+        self.title = self.title[:5]
         self.res = games_data(self.session)
         if self.res:
             self.res = sorted(self.res, key=lambda x: (-x[1], -x[2]))

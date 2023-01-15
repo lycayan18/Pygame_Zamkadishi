@@ -8,7 +8,8 @@ class Menu:
     GREEN = (15, 239, 145)
     FONT = 'data/fff-forward.regular.ttf'
 
-    def __init__(self, screen):
+    def __init__(self, screen, session=None):
+        self.session = session
         self.screen = screen
         self.title = []
         self.buttons = []

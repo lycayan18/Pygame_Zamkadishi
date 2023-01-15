@@ -12,7 +12,7 @@ from db.requests import games_data, add_user, add_game, total_record
 
 class Game(Menu):
     def __init__(self, screen, session):
-        super().__init__(screen)
+        super().__init__(screen, session)
         self.session = session
 
         self.name = ''
@@ -84,7 +84,7 @@ class Game(Menu):
         self.count += 1
         # if event and event.type == pygame.MOUSEBUTTONDOWN:
         #     if self.arrow_sprite.collide_point(*event.pos):
-        #         self.end_game(exit=True)
+        #         self.end_game(exn it=True)
         #         return 'main'
 
         return self.snake_event()
@@ -108,11 +108,6 @@ class Game(Menu):
             self.snake.append((self.snake[-1][0] + self.snake_x, self.snake[-1][1] + self.snake_y))
             del self.snake[0]
             self.apple_event()
-            if self.death_event():
-                add_game(self.session, self.name, score=self.points, time=self.count)
-                sound_tools.lose.play()
-                self.end_game()
-                return 'lose'
 
     def apple_event(self):
         if self.snake[-1][0] == self.apple_x and self.snake[-1][1] == self.apple_y:
