@@ -8,6 +8,8 @@ from game_logic.lose_menu import LoseMenu
 from game_logic.game import Game
 from game_logic.statistick import Statistick
 
+from db.db_session_maker import make_session
+
 
 def main():
     pygame.init()
@@ -17,8 +19,10 @@ def main():
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.5)
 
-    all_menu = {'start': StartMenu(screen), 'main': MainMenu(screen), 'game': Game(screen),
-                'stat': Statistick(screen), 'option': OptionsMenu(screen), 'lose': LoseMenu(screen),}
+    session = make_session()
+
+    all_menu = {'start': StartMenu(screen), 'main': MainMenu(screen), 'game': Game(screen, session),
+                'stat': Statistick(screen, session), 'option': OptionsMenu(screen), 'lose': LoseMenu(screen)}
     board = all_menu['start']
 
     clock = pygame.time.Clock()
@@ -33,7 +37,7 @@ def main():
             result = board.event_handler(event)
             if result:
                 board = all_menu[result]
-                name = all_menu['start'].get_name().upper()
+                name = all_menu['start'].get_name()
                 all_menu['main'].title[0][0] = name
                 all_menu['game'].set_name(name)
                 all_menu['main'].title[0][3][0] = 244 - len(name) // 2 * 9
