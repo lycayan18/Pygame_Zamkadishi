@@ -40,7 +40,7 @@ class Game(Menu):
         self.apple_x, self.apple_y = 10, 10
 
         self.group = pygame.sprite.Group()
-        apple_image = pygame.transform.scale(load_image('apple_v2.png', data_path='#source/tmp/'), (40, 40))
+        apple_image = pygame.transform.scale(load_image('apple_v2.png', data_path='data/'), (40, 40))
         apple_sprite1 = ImageSprite(apple_image, (50, 55), self.group)
         apple_sprite2 = ImageSprite(apple_image, (60, 620), self.group)
 
